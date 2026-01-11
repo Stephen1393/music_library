@@ -26,3 +26,4 @@ Clone the repository and install dependencies:
 git clone <repo-url>
 cd music-library
 npm install
+```

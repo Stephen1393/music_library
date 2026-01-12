@@ -9,7 +9,7 @@ Built with Node.js as a learning project with a focus on clean architecture, tes
 - JavaScript (CommonJS)
 - Git / GitHub
 - ESLint & Prettier
-- Testing: (to be added)
+- Testing: Mocha
 
 ## Getting Started
 
@@ -27,3 +27,25 @@ git clone <repo-url>
 cd music-library
 npm install
 ```
+
+## Running the App
+
+- Uses the PORT environment variable if defined, otherwise defaults to port 4000
+
+## Testing
+
+Mocha
+npm test will create a database, run tests and delete the database
+
+## API Endpoints
+POST /artists
+status 201 CREATED
+NOTE: database coming later
+
+## Request Flow (High-Level)
+
+index.js - server listens on port 4000
+app.js - receives incoming requests and routes them
+routes/artist.js - where API routes live
+controllers/artist.js - contains handler logic
+tests - contain integration tests

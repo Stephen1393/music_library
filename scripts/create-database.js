@@ -22,8 +22,9 @@ const loadEnv = (envName) => {
     // capture the name of the database so we can create it
     const databaseName = process.env.PGDATABASE
   
+    process.env.PGDATABASE = 'postgres';
     // remove the name of the database from the environment, so pg doesn't try to connect to a db which doesn't exist yet
-    delete process.env.PGDATABASE
+    
  
     return databaseName
   }

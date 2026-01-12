@@ -5,7 +5,10 @@
   "main": "index.js",
   "scripts": {
     "prestart": "node scripts/create-database.js",
-    "start": "nodemon -r dotenv/config index.js"
+    "pretest": "node scripts/create-database.js test",
+    "start": "nodemon -r dotenv/config index.js",
+    "test": "mocha tests/**/*.js --exit --recursive --timeout 60000 --file ./tests/test-setup.js",
+    "posttest": "node scripts/drop-database.js"
   },
   "repository": {
     "type": "git",
@@ -21,11 +24,15 @@
   "homepage": "https://github.com/Stephen1393/music_library#readme",
   "devDependencies": {
     "@eslint/js": "^9.39.2",
+    "chai": "^6.2.2",
     "dotenv": "^17.2.3",
     "eslint": "^9.39.2",
     "globals": "^17.0.0",
+    "mocha": "^11.7.5",
     "nodeman": "^1.1.2",
-    "nodemon": "^3.1.11"
+    "nodemon": "^3.1.11",
+    "superset": "^2.0.1",
+    "supertest": "^7.2.2"
   },
   "dependencies": {
     "express": "^5.2.1",

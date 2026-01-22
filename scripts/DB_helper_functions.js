@@ -51,7 +51,8 @@ const loadEnvForAppMigrate = () => {
          path: path.join(__dirname, envFile)
     })
 
-    if (result.error) throw result.error;
+    if (result.error) 
+        throw result.error;
 
    const PGArray = ['PGDATABASE', 'PGUSER', 'PGPASSWORD', 'PGHOST', 'PGPORT']
    const errorArray = []

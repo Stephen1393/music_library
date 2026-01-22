@@ -1,9 +1,9 @@
 const { Client } = require('pg');
-const { loadEnvForCreateDrop } = require('./helper_function')
+const { loadEnvForCreateDrop } = require('./DB_helper_function')
 
 const createDatabase = async () => { 
 
-    const database = loadEnvForCreateDrop()
+    const database = loadEnvForCreateDrop().toLowerCase()
 
      const validateDB = /^[A-Za-z_][A-Za-z0-9_]*$/
 
@@ -11,33 +11,28 @@ const createDatabase = async () => {
         throw new Error('Invalid database name!')
     }
 
-    const client = new Client()
+    const client = new Client({database: 'postgres'}) 
 
 try {
-    await client.connect()
-    console.log(`creating database ${database}...`)
+    await client.connect() 
+    console.log('connecting to postgresSQL server...')
 
-    await client.query(`CREATE DATABASE "${database}"`)
+    await client.query(`CREATE DATABASE "${database}"`) 
     console.log(`database ${database} created!`)
 
     } catch (err) {
         if (err.code === '42P04') {
             console.log("database already exists!")
+            return
         }
         else {
-            console.log(err)
+            throw err;
         }
     } finally {
         await client.end()
     }
 }
 
-const tryDatabase = async () => {
-  try {
-    await createDatabase() 
-  } catch (err) {
-    console.log(err)
-  }
-}
-
-tryDatabase()
+createDatabase().catch((err) => {
+  console.error(err);
+});

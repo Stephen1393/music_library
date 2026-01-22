@@ -1,20 +1,9 @@
 
-const { migrate } = require('postgres-migrations')
-const path = require('path')
- 
-const { NODE_ENV } = process.env
- 
+const { migrate } = require('postgres-migrations');
+const { loadEnvForAppMigrate } = require('./DB_helper_function');
 
-if (NODE_ENV != 'production') {
-  const args = process.argv.slice(2)[0]
- 
-  const envFile = args === 'test' ? '../.env.test' : '../.env'
-  
-  require('dotenv').config({
-    path: path.join(__dirname, envFile),
-  })
-}
- 
+loadEnvForAppMigrate()
+
 const { PGUSER, PGHOST, PGPASSWORD, PGDATABASE, PGPORT } = process.env 
  
 const config = { 
@@ -24,13 +13,12 @@ const config = {
   host: PGHOST,
   port: parseInt(PGPORT),
   ensureDatabaseExists: true,
-  defaultDatabase: PGDATABASE
+  defaultDatabase: 'postgres'
 }
  
 const migrateDB = async (config) => {
  
   console.log('Migrating Database...')
- 
   const output = await migrate(config, '../migrations') 
  
   if (!output.length) {
@@ -40,8 +28,5 @@ const migrateDB = async (config) => {
   }
 }
  
-try {
-  migrateDB(config)
-} catch (err) {
-  console.log(err)
-}
+migrateDB(config).catch(console.err);
+

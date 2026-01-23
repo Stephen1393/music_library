@@ -40,7 +40,22 @@ npm test will create a database, run tests and delete the database
 ## API Endpoints
 POST /artists
 status 201 CREATED
-NOTE: database coming later
+
+### database
+The API uses **postgresSQL**
+  
+  ## set-up
+  uses a `.env.` file in the project root:
+
+-- env
+PGDATABASE=artists_db
+PGUSER=your_pg_user
+PGPASSWORD=your_pg_password
+PGHOST=localhost
+PGPORT=5432 
+
+A separate `.env.test` file is used when running tests.
+
 
 ## Request Flow (High-Level)
 

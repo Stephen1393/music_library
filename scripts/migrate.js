@@ -1,6 +1,7 @@
 
 const { migrate } = require('postgres-migrations');
 const { loadEnvForAppMigrate } = require('./DB_helper_function');
+const path = require('path')
 
 loadEnvForAppMigrate()
 
@@ -15,11 +16,13 @@ const config = {
   ensureDatabaseExists: true,
   defaultDatabase: 'postgres'
 }
+
+const migratePath =  path.join(__dirname, '../migrations')
  
 const migrateDB = async (config) => {
  
   console.log('Migrating Database...')
-  const output = await migrate(config, '../migrations') 
+  const output = await migrate(config, migratePath) 
  
   if (!output.length) {
     console.log('Database already up to date!')
